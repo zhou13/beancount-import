@@ -145,6 +145,7 @@ class BrokerageAction(enum.Enum):
     WIRE_FUNDS = "Wire Funds"
     WIRE_FUNDS_RECEIVED = "Wire Funds Received"
     MISC_CASH_ENTRY = "Misc Cash Entry"
+    PROMOTIONAL_AWARD = "Promotional Award"
 
 
 class BankingEntryType(enum.Enum):
@@ -262,7 +263,10 @@ class RawBrokerageEntry(RawEntry):
                 dividend_account=dividend_account,
                 **shared_attrs,
             )
-        if self.action == BrokerageAction.BANK_INTEREST:
+        if self.action in (
+            BrokerageAction.BANK_INTEREST,
+            BrokerageAction.PROMOTIONAL_AWARD,
+        ):
             return BankInterest(
                 interest_account=interest_account,
                 **shared_attrs,
